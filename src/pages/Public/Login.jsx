@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 
 import { useForm } from "react-hook-form";
@@ -17,6 +17,11 @@ const Login = () => {
 
   const { loading } = useSelector((state) => state.auth);
 
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
+
+  console.log(redirect)
+
   const {
     register,
     handleSubmit,
@@ -26,11 +31,11 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    const result = await dispatch(login(data));
+    try {
+      const result = await dispatch(login(data)).unwrap();
+      navigate(redirect);
+    } catch (error) {}
 
-    if (login.fulfilled.match(result)) {
-      navigate("/");
-    }
   };
 
   return (
@@ -39,8 +44,13 @@ const Login = () => {
         <h1 className="mb-6 text-center text-3xl font-bold">Login</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Email */}
+          {redirect === "/checkout" && (
+            <div className="my-4 rounded-md border border-yellow-300 bg-yellow-50 p-3 text-yellow-800">
+              Please log in to continue to checkout.
+            </div>
+          )}
 
+          {/* Email */}
           <div>
             <label className="mb-1 block text-sm font-medium">Email</label>
 

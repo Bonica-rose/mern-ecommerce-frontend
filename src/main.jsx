@@ -12,11 +12,11 @@ import './index.css';
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-    <Provider store={store}>
-      <Suspense fallback={<PageLoader />}>
-        <CustomToaster />
-        <RouterProvider router={router} />
-      </Suspense>
-    </Provider>
+  <Provider store={store}>
+    <Suspense fallback={<PageLoader />}>
+      <RouterProvider router={router} />
+      <CustomToaster />
+    </Suspense>
+  </Provider>,
   // </StrictMode>,
 );

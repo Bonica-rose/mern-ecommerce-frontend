@@ -13,6 +13,8 @@ import EmptyCart from "../../components/cart/EmptyCart";
 const Cart = () => {
     const dispatch = useDispatch();
 
+    const { isAuthenticated } = useSelector((state) => state.auth);
+
     const { items, totalQty, totalAmount, loading, error } = useSelector(
         (state) => state.cart,
     );
@@ -35,26 +37,30 @@ const Cart = () => {
 
     return (
         <section className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex items-center justify-between">
+            <div className="mb-8 flex items-center justify-between">
             <h1 className="text-3xl font-bold">Shopping Cart</h1>
 
             <button
                 onClick={() => dispatch(clearCart())}
                 className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
             >
-            Clear Cart
+                Clear Cart
             </button>
-        </div>
+            </div>
 
-        <div className="grid gap-8 lg:grid-cols-3">
+            <div className="grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2">
-            <CartList items={items} />
+                <CartList items={items} />
             </div>
 
             <div>
-            <CartSummary totalQty={totalQty} totalAmount={totalAmount} />
+                <CartSummary
+                totalQty={totalQty}
+                totalAmount={totalAmount}
+                isAuthenticated={isAuthenticated}
+                />
             </div>
-        </div>
+            </div>
         </section>
     );
 }

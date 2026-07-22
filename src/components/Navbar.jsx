@@ -11,19 +11,21 @@ function Navbar() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { totalQty } = useSelector((state) => state.cart);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getCart());
-    }
-  }, [dispatch, isAuthenticated]);
-
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch, isAuthenticated]);
 
   const closeMenu = () => setIsOpen(false);
 
   const handleLogout = () => {
     dispatch(logout());
+    closeMenu();
   };
+
+  const navClass = ({ isActive }) =>
+    isActive ? "text-sky-300 font-semibold" : "hover:text-sky-300";
 
   return (
     <nav className="bg-slate-800 text-white shadow">
@@ -32,17 +34,21 @@ function Navbar() {
           ShopEase
         </Link>
 
-        {/* Desktop Menu */}
+        {/* Desktop */}
         <div className="hidden items-center gap-6 md:flex">
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/" className={navClass}>
+            Home
+          </NavLink>
 
-          <NavLink to="/products">Products</NavLink>
+          <NavLink to="/products" className={navClass}>
+            Products
+          </NavLink>
 
           <Link to="/cart" className="relative">
             <FiShoppingCart size={20} />
 
             {totalQty > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs">
                 {totalQty}
               </span>
             )}
@@ -50,28 +56,36 @@ function Navbar() {
 
           {!isAuthenticated ? (
             <>
-              <NavLink to="/login">Sign In</NavLink>
+              <NavLink to="/login" className={navClass}>
+                Sign In
+              </NavLink>
 
-              <NavLink to="/register">Create Account</NavLink>
+              <NavLink to="/register" className={navClass}>
+                Create Account
+              </NavLink>
             </>
           ) : (
             <>
-              <NavLink to="/profile">Profile</NavLink>
+              {/* <NavLink to="/profile" className={navClass}>
+                Profile
+              </NavLink> */}
 
-              {user?.role === "Admin" && <NavLink to="/admin">Admin</NavLink>}
-              {user?.role === "User" && (
-                <NavLink to="/products">{user?.name}</NavLink>
-              )}
-              {(user?.role !== "User" || user?.role !== "Admin") && (
-                <NavLink to="/products">Guest</NavLink>
+              {user?.role === "Admin" && (
+                <NavLink to="/admin" className={navClass}>
+                  Admin
+                </NavLink>
               )}
 
-              <button onClick={handleLogout}>Logout</button>
+              <span className="font-medium text-sky-300">{user?.name}</span>
+
+              <button onClick={handleLogout} className="hover:text-red-400">
+                Logout
+              </button>
             </>
           )}
         </div>
 
-        {/* Mobile Button */}
+        {/* Mobile Menu Button */}
         <button
           className="text-2xl md:hidden"
           onClick={() => setIsOpen(!isOpen)}
@@ -94,12 +108,12 @@ function Navbar() {
           <Link
             to="/cart"
             onClick={closeMenu}
-            className="relative flex items-center gap-2"
+            className="relative flex items-center gap-1"
           >
             <FiShoppingCart size={20} />
 
             {totalQty > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs">
                 {totalQty}
               </span>
             )}
@@ -111,23 +125,25 @@ function Navbar() {
                 Sign In
               </NavLink>
 
-              <NavLink to="/register" onClick={closeMenu} className="block">
+              <NavLink to="/register" onClick={closeMenu} className={navClass}>
                 Create Account
               </NavLink>
             </>
           ) : (
             <>
-              <NavLink to="/profile" onClick={closeMenu} className="block">
+              {/* <NavLink to="/profile" onClick={closeMenu} className={navClass}>
                 Profile
-              </NavLink>
+              </NavLink> */}
 
               {user?.role === "Admin" && (
-                <NavLink to="/admin" onClick={closeMenu} className="block">
+                <NavLink to="/admin" onClick={closeMenu} className={navClass}>
                   Admin
                 </NavLink>
               )}
 
-              <button onClick={handleLogout} className="block">
+              <p className="text-sky-300">{user?.name}</p>
+
+              <button onClick={handleLogout} className="hover:text-red-400">
                 Logout
               </button>
             </>
