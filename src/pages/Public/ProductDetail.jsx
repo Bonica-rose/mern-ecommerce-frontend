@@ -23,7 +23,7 @@ const ProductDetail = () => {
     <div className="container mx-auto py-8">
       <Link
         to="/products"
-        className="mb-6 inline-block text-blue-600 hover:underline"
+        className="mx-auto inline-block text-blue-600 hover:underline"
       >
         ← Back to Products
       </Link>
