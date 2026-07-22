@@ -12,7 +12,7 @@ const HomePage = lazy(() => import("../pages/Public/Home"));
 import LoginPage from "../pages/Public/Login";
 import RegisterPage from "../pages/Public/Register";
 const ProductsPage = lazy(() => import("../pages/Public/Products"));
-import ProductDetailsPage from "../pages/Public/ProductDetails";
+import ProductDetailsPage from "../pages/Public/ProductDetail";
 const CartPage = lazy(() => import("../pages/Public/Cart"));
 
 import About from "../pages/About";

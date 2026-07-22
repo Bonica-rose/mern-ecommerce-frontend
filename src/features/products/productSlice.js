@@ -11,11 +11,17 @@ const initialState = {
     products: [],
     product: null,
 
+    total: 0,
+    page: 1,
+    pages: 1,
+    limit: 12,
+
     filters: {
         search: "",
         category: "",
         sort: "latest",
         page: 1,
+        limit: 12,
     },
 
     loading: false,
@@ -74,6 +80,9 @@ const productSlice = createSlice({
             .addCase(getProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload.products;
+                state.page = action.payload.page;
+                state.pages = action.payload.pages;
+                state.limit = action.payload.limit;
             })
             .addCase(getProducts.rejected, (state, action) => {
                 state.loading = false;

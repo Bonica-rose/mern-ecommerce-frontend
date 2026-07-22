@@ -1,6 +1,6 @@
 const SORT_OPTIONS = [
     {
-        value: "",
+        value: "latest",
         label: "Default",
     },
     {
