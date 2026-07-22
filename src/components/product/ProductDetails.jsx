@@ -33,7 +33,7 @@ const ProductDetails = ({ product }) => {
 
             <p className="mt-4">Category: {product.category}</p>
 
-            <p className="mt-4 text-2xl font-bold text-green-600">
+            <p className="my-4 text-2xl font-bold text-green-600">
             ₹{product.price}
             </p>
 
@@ -43,7 +43,7 @@ const ProductDetails = ({ product }) => {
                 disabled={loading}
                 className="mt-6 rounded bg-blue-600 px-6 py-2 text-white"
             >
-                View Details
+                Add to Cart
             </Link>
         </div>
         </div>
