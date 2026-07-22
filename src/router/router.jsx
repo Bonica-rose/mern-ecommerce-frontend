@@ -21,7 +21,9 @@ import Privacy from "../pages/Privacy";
 
 //user
 import CheckoutPage from "../pages/User/Checkout";
+import OrderSuccessPage from "../pages/User/OrderSuccess";
 import MyOrdersPage from "../pages/User/MyOrders";
+import OrderDetailsPage from "../pages/User/OrderDetails";
 import ProfilePage from "../pages/User/Profile";
 
 //admin
@@ -79,8 +81,16 @@ export const router = createBrowserRouter([
                 element: <CheckoutPage />,
             },
             {
+                path: "/order-success",
+                element: <OrderSuccessPage />,
+            },
+            {
                 path: "/my-orders",
                 element: <MyOrdersPage />,
+            },
+            {
+                path: "/orders/:id",
+                element: <OrderDetailsPage />,
             },
             {
                 path: "/profile",
@@ -95,27 +105,27 @@ export const router = createBrowserRouter([
         path: "/admin",
         element: <AdminRoute />,
         children: [
+        {
+            element: <AdminLayout />,
+            children: [
             {
-                element: <AdminLayout />,
-                children: [
-                    {
-                        path: "dashboard",
-                        element: <DashboardPage />,
-                    },
-                    {
-                        path: "products",
-                        element: <AdminProductsPage />,
-                    },
-                    {
-                        path: "users",
-                        element: <UsersPage />,
-                    },
-                    {
-                        path: "orders",
-                        element: <OrdersPage />,
-                    },
-                ],
+                path: "dashboard",
+                element: <DashboardPage />,
             },
+            {
+                path: "products",
+                element: <AdminProductsPage />,
+            },
+            {
+                path: "users",
+                element: <UsersPage />,
+            },
+            {
+                path: "orders",
+                element: <OrdersPage />,
+            },
+            ],
+        },
         ],
     },
 ]);
