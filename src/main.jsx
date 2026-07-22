@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import PageLoader from "./components/loaders/PageLoader";
 import { router } from "./router/router";
 import { store } from "./app/store";
-import './index.css'
+import './index.css';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

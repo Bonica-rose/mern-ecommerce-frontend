@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
+import { logout } from "../features/auth/authThunks";
 
 function Navbar() {
+  const dispatch = useDispatch();
+
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <nav className="bg-slate-800 text-white shadow">
@@ -95,7 +102,9 @@ function Navbar() {
                 </NavLink>
               )}
 
-              <button className="block">Logout</button>
+              <button onClick={handleLogout} className="block">
+                Logout
+              </button>
             </>
           )}
         </div>

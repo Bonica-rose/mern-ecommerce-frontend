@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="mt-12 border-t border-slate-800 bg-slate-800 text-white">
+    <footer className="border-t border-slate-800 bg-slate-800 text-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-sm md:flex-row">
         <p>© {new Date().getFullYear()} ShopEase. All rights reserved.</p>
 
