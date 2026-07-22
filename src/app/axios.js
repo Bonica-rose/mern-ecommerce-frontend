@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { logout } from "../features/auth/authThunks";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -40,11 +41,12 @@ api.interceptors.response.use(
             case 401:
                 // Refresh token or (logout + redirect)
                 toast.error("Session expired. Please log in again.");
-                // // logout user
-                // store.dispatch(logout());
+                
+                // logout user
+                store.dispatch(logout());
 
-                // // redirect
-                // window.location.href = "/login";
+                // redirect
+                window.location.href = "/login";
                 break;
 
             case 403:
