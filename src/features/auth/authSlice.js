@@ -9,6 +9,7 @@ import {
 const initialState = {
     user: null,
     isAuthenticated: false,
+    authChecked: false,
 
     loading: false,
     error: null,
@@ -65,11 +66,13 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.user = action.payload.user;
                 state.isAuthenticated = true;
+                state.authChecked = true;
             })
             .addCase(fetchCurrentUser.rejected, (state) => {
                 state.loading = false;
                 state.user = null;
                 state.isAuthenticated = false;
+                state.authChecked = true;
             })
 
             // Logout

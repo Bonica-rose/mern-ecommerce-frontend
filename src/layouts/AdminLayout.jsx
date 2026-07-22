@@ -8,10 +8,6 @@ import { fetchCurrentUser } from "../features/auth/authThunks";
 const AdminLayout = () => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchCurrentUser());
-    }, [dispatch]);    
-    
     return (
         <div className="min-h-screen flex bg-gray-100">
         <Sidebar />
@@ -25,6 +21,6 @@ const AdminLayout = () => {
         </div>
         </div>
     );
-}
+};
 
 export default AdminLayout;

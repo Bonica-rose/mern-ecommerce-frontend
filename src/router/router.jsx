@@ -4,8 +4,9 @@ import { lazy } from "react";
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";;
 import AdminRoute from "./AdminRoute";
+import GuestRoute from "./GuestRoute";
 
 //public
 const HomePage = lazy(() => import("../pages/Public/Home"));
@@ -54,11 +55,19 @@ export const router = createBrowserRouter([
         },
         {
             path: "/login",
-            element: <LoginPage />,
+            element: (
+            <GuestRoute>
+                <LoginPage />
+            </GuestRoute>
+            ),
         },
         {
             path: "/register",
-            element: <RegisterPage />,
+            element: (
+            <GuestRoute>
+                <RegisterPage />
+            </GuestRoute>
+            ),
         },
         {
             path: "/products",

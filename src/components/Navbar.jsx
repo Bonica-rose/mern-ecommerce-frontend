@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { logout } from "../features/auth/authThunks";
-import { getCart } from "../features/cart/cartThunks";
+// import { getCart } from "../features/cart/cartThunks";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -13,9 +13,9 @@ function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch, isAuthenticated]);
+  // useEffect(() => {
+  //   dispatch(getCart());
+  // }, [dispatch, isAuthenticated]);
 
   const closeMenu = () => setIsOpen(false);
 
@@ -71,7 +71,7 @@ function Navbar() {
               </NavLink> */}
 
               {user?.role === "Admin" && (
-                <NavLink to="/admin" className={navClass}>
+                <NavLink to="/admin/dashboard" className={navClass}>
                   Admin
                 </NavLink>
               )}

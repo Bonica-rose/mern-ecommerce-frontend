@@ -21,8 +21,8 @@ const menuItems = [
 
 const Sidebar = () => {
     return (
-        <aside className="w-64 bg-white border-r">
-        <div className="p-5 text-xl font-bold">Admin Panel</div>
+        <aside className="w-60 bg-white border-r border-gray-300">
+        <div className="p-4.5 text-xl font-bold border-b border-gray-300">Admin Panel</div>
 
         <nav className="flex flex-col">
             {menuItems.map((item) => (
