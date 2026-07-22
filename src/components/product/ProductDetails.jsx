@@ -1,4 +1,27 @@
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../features/cart/cartThunks";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 const ProductDetails = ({ product }) => {
+    const dispatch = useDispatch();
+
+    const { loading } = useSelector((state) => state.cart);
+
+    const handleAddToCart = async () => {
+        try {
+            await dispatch(
+            addToCart({
+                productId: product._id,
+                quantity: 1,
+            }),
+            ).unwrap();
+
+            toast.success("Product added to cart");
+        } catch (error) {
+            toast.error(error);
+        }
+    };
     return (
         <div className="p-9 grid gap-8 md:grid-cols-2">
         <img src={product.image} alt={product.name} className="rounded" />
@@ -14,9 +37,14 @@ const ProductDetails = ({ product }) => {
             ₹{product.price}
             </p>
 
-            <button className="mt-6 rounded bg-blue-600 px-6 py-2 text-white">
-            Add To Cart
-            </button>
+            <Link
+                to={`/products/${product._id}`}
+                onClick={handleAddToCart}
+                disabled={loading}
+                className="mt-6 rounded bg-blue-600 px-6 py-2 text-white"
+            >
+                View Details
+            </Link>
         </div>
         </div>
     );

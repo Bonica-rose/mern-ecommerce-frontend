@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { logout } from "../features/auth/authThunks";
+import { getCart } from "../features/cart/cartThunks";
 
 function Navbar() {
   const dispatch = useDispatch();
 
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { totalQty } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getCart());
+    }
+  }, [dispatch, isAuthenticated]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,9 +38,15 @@ function Navbar() {
 
           <NavLink to="/products">Products</NavLink>
 
-          <NavLink to="/cart" className="text-xl hover:text-sky-300">
-            <FiShoppingCart />
-          </NavLink>
+          <Link to="/cart" className="relative">
+            <FiShoppingCart size={20} />
+
+            {totalQty > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+                {totalQty}
+              </span>
+            )}
+          </Link>
 
           {!isAuthenticated ? (
             <>
@@ -45,8 +59,14 @@ function Navbar() {
               <NavLink to="/profile">Profile</NavLink>
 
               {user?.role === "Admin" && <NavLink to="/admin">Admin</NavLink>}
+              {user?.role === "User" && (
+                <NavLink to="/products">{user?.name}</NavLink>
+              )}
+              {(user?.role !== "User" || user?.role !== "Admin") && (
+                <NavLink to="/products">Guest</NavLink>
+              )}
 
-              <button>Logout</button>
+              <button onClick={handleLogout}>Logout</button>
             </>
           )}
         </div>
@@ -71,14 +91,19 @@ function Navbar() {
             Products
           </NavLink>
 
-          <NavLink
+          <Link
             to="/cart"
             onClick={closeMenu}
-            className="flex items-center gap-2"
+            className="relative flex items-center gap-2"
           >
-            <FiShoppingCart />
-            Cart
-          </NavLink>
+            <FiShoppingCart size={20} />
+
+            {totalQty > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+                {totalQty}
+              </span>
+            )}
+          </Link>
 
           {!isAuthenticated ? (
             <>

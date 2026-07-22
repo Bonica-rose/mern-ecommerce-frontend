@@ -5,7 +5,7 @@ const ErrorMessage = ({ message = "Something went wrong.", className = "" }) => 
 
     return (
         <div
-        className={`flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 ${className}`}
+        className={`m-3 flex items-start gap-3 rounded border border-red-200 bg-red-50 p-4 text-red-700 ${className}`}
         role="alert"
         >
         <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
