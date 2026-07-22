@@ -39,8 +39,8 @@ const Cart = () => {
             <h1 className="text-3xl font-bold">Shopping Cart</h1>
 
             <button
-            onClick={() => dispatch(clearCart())}
-            className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                onClick={() => dispatch(clearCart())}
+                className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
             >
             Clear Cart
             </button>
