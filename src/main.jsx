@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router-dom";
 
 import { Provider } from "react-redux";
 
-import PageLoader from "./components/loaders/PageLoader";
+import PageLoader from "./router/loaders/PageLoader";
 import { router } from "./router/router";
 import { store } from "./app/store";
 import './index.css';

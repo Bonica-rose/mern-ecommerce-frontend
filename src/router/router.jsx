@@ -4,6 +4,9 @@ import { lazy } from "react";
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
+import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute";
+
 //public
 const HomePage = lazy(() => import("../pages/Public/Home"));
 import LoginPage from "../pages/Public/Login";
@@ -67,41 +70,52 @@ export const router = createBrowserRouter([
             path: "/cart",
             element: <CartPage />,
         },
+        // Protected Routes
         {
-            path: "/checkout",
-            element: <CheckoutPage />,
-        },
-        {
-            path: "/my-orders",
-            element: <MyOrdersPage />,
-        },
-        {
-            path: "/profile",
-            element: <ProfilePage />,
+            element: <ProtectedRoute />,
+            children: [
+            {
+                path: "/checkout",
+                element: <CheckoutPage />,
+            },
+            {
+                path: "/my-orders",
+                element: <MyOrdersPage />,
+            },
+            {
+                path: "/profile",
+                element: <ProfilePage />,
+            },
+            ],
         },
         ],
     },
 
     {
         path: "/admin",
-        element: <AdminLayout />,
+        element: <AdminRoute />,
         children: [
-        {
-            path: "dashboard",
-            element: <DashboardPage />,
-        },
-        {
-            path: "products",
-            element: <AdminProductsPage />,
-        },
-        {
-            path: "users",
-            element: <UsersPage />,
-        },
-        {
-            path: "orders",
-            element: <OrdersPage />,
-        },
+            {
+                element: <AdminLayout />,
+                children: [
+                    {
+                        path: "dashboard",
+                        element: <DashboardPage />,
+                    },
+                    {
+                        path: "products",
+                        element: <AdminProductsPage />,
+                    },
+                    {
+                        path: "users",
+                        element: <UsersPage />,
+                    },
+                    {
+                        path: "orders",
+                        element: <OrdersPage />,
+                    },
+                ],
+            },
         ],
     },
 ]);
