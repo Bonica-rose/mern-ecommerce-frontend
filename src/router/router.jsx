@@ -12,12 +12,16 @@ const ProductsPage = lazy(() => import("../pages/Public/Products"));
 import ProductDetailsPage from "../pages/Public/ProductDetails";
 const CartPage = lazy(() => import("../pages/Public/Cart"));
 
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Privacy from "../pages/Privacy";
+
 //user
 import CheckoutPage from "../pages/User/Checkout";
 import MyOrdersPage from "../pages/User/MyOrders";
 import ProfilePage from "../pages/User/Profile";
 
-//admin 
+//admin
 const DashboardPage = lazy(() => import("../pages/Admin/Dashboard"));
 import AdminProductsPage from "../pages/Admin/Products";
 import UsersPage from "../pages/Admin/Users";
@@ -30,6 +34,18 @@ export const router = createBrowserRouter([
         {
             path: "/",
             element: <HomePage />,
+        },
+        {
+            path: "/about",
+            element: <About />,
+        },
+        {
+            path: "/contact",
+            element: <Contact />,
+        },
+        {
+            path: "/privacy",
+            element: <Privacy />,
         },
         {
             path: "/login",
