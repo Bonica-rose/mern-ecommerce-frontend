@@ -1,26 +1,32 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import Sidebar from "../components/admin/Sidebar";
 import Topbar from "../components/admin/Topbar";
-import { fetchCurrentUser } from "../features/auth/authThunks";
 
 const AdminLayout = () => {
-    const dispatch = useDispatch();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    return (
-        <div className="min-h-screen flex bg-gray-100">
-        <Sidebar />
+  return (
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-        <div className="flex-1 flex flex-col">
-            <Topbar />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-            <main className="flex-1 p-6 overflow-auto">
-            <Outlet />
-            </main>
-        </div>
-        </div>
-    );
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Topbar setSidebarOpen={setSidebarOpen} />
+
+        <main className="flex-1 overflow-auto p-4 md:p-6">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default AdminLayout;

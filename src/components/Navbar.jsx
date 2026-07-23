@@ -3,19 +3,14 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { logout } from "../features/auth/authThunks";
-// import { getCart } from "../features/cart/cartThunks";
 
-function Navbar() {
+const Navbar = () =>{
   const dispatch = useDispatch();
 
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { totalQty } = useSelector((state) => state.cart);
 
   const [isOpen, setIsOpen] = useState(false);
-
-  // useEffect(() => {
-  //   dispatch(getCart());
-  // }, [dispatch, isAuthenticated]);
 
   const closeMenu = () => setIsOpen(false);
 
@@ -66,9 +61,9 @@ function Navbar() {
             </>
           ) : (
             <>
-              {/* <NavLink to="/profile" className={navClass}>
-                Profile
-              </NavLink> */}
+              <NavLink to="/my-orders" className={navClass}>
+                My Orders
+              </NavLink>
 
               {user?.role === "Admin" && (
                 <NavLink to="/admin/dashboard" className={navClass}>
@@ -131,9 +126,9 @@ function Navbar() {
             </>
           ) : (
             <>
-              {/* <NavLink to="/profile" onClick={closeMenu} className={navClass}>
-                Profile
-              </NavLink> */}
+              <NavLink to="/my-orders" onClick={closeMenu} className="block">
+                My Orders
+              </NavLink>
 
               {user?.role === "Admin" && (
                 <NavLink to="/admin" onClick={closeMenu} className={navClass}>

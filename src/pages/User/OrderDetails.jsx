@@ -6,7 +6,7 @@ import Loading from "../../components/common/Loading";
 import ErrorMessage from "../../components/common/ErrorMessage";
 import EmptyState from "../../components/common/EmptyState";
 
-import { getOrder } from "../../features/orders/orderThunks";
+import { getOrderById } from "../../features/orders/orderThunks";
 
 const OrderDetails = () => {
     const { id } = useParams();
@@ -15,7 +15,7 @@ const OrderDetails = () => {
     const { order, loading, error } = useSelector((state) => state.orders);
 
     useEffect(() => {
-        dispatch(getOrder(id));
+        dispatch(getOrderById(id));
     }, [dispatch, id]);
 
     if (loading) return <Loading />;
@@ -57,7 +57,7 @@ const OrderDetails = () => {
                 {order.items.map((item) => (
                     <div key={item._id} className="flex justify-between border-b border-gray-400 pb-2">
                         <div>
-                            <p className="font-medium">{item.product?.name}</p>
+                            <p className="font-medium">{item.product?.name || "Some product(hard deleted)"}</p>
 
                             <p className="text-sm text-gray-500">
                             Quantity: {item.quantity}

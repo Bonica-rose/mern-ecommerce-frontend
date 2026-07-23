@@ -3,6 +3,7 @@ import {
     placeOrder,
     myOrders,
     getOrder,
+    getOrderById,
     allOrders,
     updateOrderStatus,
 } from "./orderThunks";
@@ -61,7 +62,7 @@ const orderSlice = createSlice({
                 state.error = action.payload;
             })
 
-            // Get Single Order
+            // Get Single Order - Admin
             .addCase(getOrder.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -75,7 +76,21 @@ const orderSlice = createSlice({
                 state.error = action.payload;
             })
 
-            // Admin - All Orders
+            // Get Single Order - User
+            .addCase(getOrderById.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getOrderById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.order = action.payload.order;
+            })
+            .addCase(getOrderById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            // Admin - All Orders 
             .addCase(allOrders.pending, (state) => {
                 state.loading = true;
                 state.error = null;

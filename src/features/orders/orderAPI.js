@@ -11,18 +11,24 @@ export const myOrdersAPI = async () => {
 };
 
 export const getOrderAPI = async (id) => {
+    const response = await api.get(`/admin/orders/${id}`);
+    return response.data;
+};
+
+export const getOrderByIdAPI = async (id) => {
     const response = await api.get(`/orders/${id}`);
     return response.data;
 };
 
 export const allOrdersAPI = async () => {
-    const response = await api.get("/orders");
+    const response = await api.get("/admin/orders");
     return response.data;
 };
 
-export const updateOrderStatusAPI = async ({ id, orderStatus }) => {
-    const response = await api.patch(`/orders/${id}`, {
-        orderStatus,
+export const updateOrderStatusAPI = async ({ id, data }) => {
+    const response = await api.put(`/admin/orders/${id}`, {
+        status: data.status,
+        paymentStatus: data.paymentStatus,
     });
 
     return response.data;

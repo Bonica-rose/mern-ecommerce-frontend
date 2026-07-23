@@ -10,6 +10,7 @@ import PasswordInput from "../../components/PasswordInput";
 
 import { register as registerUser } from "../../features/auth/authThunks";
 import { registerSchema } from "../../schemas/authSchema";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -26,12 +27,13 @@ const Register = () => {
   });
 
   const onSubmit = async (data) => {
-    delete data.confirmPassword;
-
-    const result = await dispatch(registerUser(data));
-
-    if (registerUser.fulfilled.match(result)) {
-      navigate("/login");
+    try {
+      const result = await dispatch(registerUser(data)).unwrap();
+      if (result) {
+        navigate("/login");
+      }      
+    } catch (error) {
+      toast.error(error || "Account Registration failed")
     }
   };
 

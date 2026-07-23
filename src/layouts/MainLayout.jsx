@@ -8,12 +8,14 @@ import { getCart } from "../features/cart/cartThunks";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   // Get current user once
-  useEffect(() => {
-    dispatch(fetchCurrentUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     dispatch(fetchCurrentUser());
+  //   }    
+  // }, [dispatch, isAuthenticated]);
 
   // Get cart whenever user changes
   useEffect(() => {

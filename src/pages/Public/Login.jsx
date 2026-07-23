@@ -19,9 +19,7 @@ const Login = () => {
 
   const [searchParams] = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
-
-  console.log(redirect);
-  
+  // console.log(redirect); 
 
   const {
     register,
@@ -34,7 +32,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const result = await dispatch(login(data)).unwrap();
-      console.log(result);
+      // console.log(result);
       if (result.user.role === "Admin") {
         navigate("/admin/dashboard");
       } else {

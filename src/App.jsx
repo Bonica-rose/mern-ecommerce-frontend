@@ -1,9 +1,24 @@
-import React from 'react'
+import { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const App = () => {
+import { router } from "./router/router";
+import { fetchCurrentUser } from "./features/auth/authThunks";
+import CustomToaster from "./components/common/CustomToaster";
+
+const App = () =>{
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
+
   return (
-    <div className='text-blue-800'>App</div>
-  )
+    <>
+      <RouterProvider router={router} />
+      <CustomToaster />
+    </>
+  );
 }
 
-export default App
+export default App;

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getProductsAPI,
+    getProductCategoriesAPI,
     getProductAPI,
     createProductAPI,
     updateProductAPI,
@@ -15,6 +16,19 @@ export const getProducts = createAsyncThunk(
         } catch (error) {
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message || "Failed to fetch products"
+            );
+        }
+    }
+);
+
+export const getProductCategories = createAsyncThunk(
+    "products/getProductcategories",
+    async (_, thunkAPI) => {
+        try {
+            return await getProductCategoriesAPI();
+        } catch (error) {            
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Failed to fetch product categories"
             );
         }
     }

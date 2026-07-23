@@ -29,112 +29,132 @@ import ProfilePage from "../pages/User/Profile";
 
 //admin
 const DashboardPage = lazy(() => import("../pages/Admin/Dashboard"));
-import AdminProductsPage from "../pages/Admin/Products";
-import UsersPage from "../pages/Admin/Users";
-import OrdersPage from "../pages/Admin/Orders";
+import ProductListPage from "../pages/Admin/products/ProductList";
+import AddProduct from "../pages/Admin/products/AddProduct";
+import EditProduct from "../pages/Admin/products/EditProduct";
+import UserListPage from "../pages/Admin/UserList";
+import OrderListPage from "../pages/Admin/OrderList";
+import OrderEditPage from "../pages/Admin/OrderEdit";
 
 export const router = createBrowserRouter([
-    {
-        element: <MainLayout />,
+  {
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/privacy",
+        element: <Privacy />,
+      },
+      {
+        path: "/login",
+        element: (
+          <GuestRoute>
+            <LoginPage />
+          </GuestRoute>
+        ),
+      },
+      {
+        path: "/register",
+        element: (
+          <GuestRoute>
+            <RegisterPage />
+          </GuestRoute>
+        ),
+      },
+      {
+        path: "/products",
+        element: <ProductsPage />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetailsPage />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
+      // Protected Routes
+      {
+        element: <ProtectedRoute />,
         children: [
-        {
-            path: "/",
-            element: <HomePage />,
-        },
-        {
-            path: "/about",
-            element: <About />,
-        },
-        {
-            path: "/contact",
-            element: <Contact />,
-        },
-        {
-            path: "/privacy",
-            element: <Privacy />,
-        },
-        {
-            path: "/login",
-            element: (
-            <GuestRoute>
-                <LoginPage />
-            </GuestRoute>
-            ),
-        },
-        {
-            path: "/register",
-            element: (
-            <GuestRoute>
-                <RegisterPage />
-            </GuestRoute>
-            ),
-        },
-        {
-            path: "/products",
-            element: <ProductsPage />,
-        },
-        {
-            path: "/products/:id",
-            element: <ProductDetailsPage />,
-        },
-        {
-            path: "/cart",
-            element: <CartPage />,
-        },
-        // Protected Routes
-        {
-            element: <ProtectedRoute />,
-            children: [
-            {
-                path: "/checkout",
-                element: <CheckoutPage />,
-            },
-            {
-                path: "/order-success",
-                element: <OrderSuccessPage />,
-            },
-            {
-                path: "/my-orders",
-                element: <MyOrdersPage />,
-            },
-            {
-                path: "/orders/:id",
-                element: <OrderDetailsPage />,
-            },
-            {
-                path: "/profile",
-                element: <ProfilePage />,
-            },
-            ],
-        },
+          {
+            path: "/checkout",
+            element: <CheckoutPage />,
+          },
+          {
+            path: "/order-success",
+            element: <OrderSuccessPage />,
+          },
+          {
+            path: "/my-orders",
+            element: <MyOrdersPage />,
+          },
+          {
+            path: "/orders/:id",
+            element: <OrderDetailsPage />,
+          },
+          {
+            path: "/profile",
+            element: <ProfilePage />,
+          },
         ],
-    },
+      },
+    ],
+  },
 
-    {
-        path: "/admin",
-        element: <AdminRoute />,
+  {
+    path: "/admin",
+    element: <AdminRoute />,
+    children: [
+      {
+        element: <AdminLayout />,
         children: [
-        {
-            element: <AdminLayout />,
+          {
+            path: "dashboard",
+            element: <DashboardPage />,
+          },
+          {
+            path: "products",
             children: [
-            {
-                path: "dashboard",
-                element: <DashboardPage />,
-            },
-            {
-                path: "products",
-                element: <AdminProductsPage />,
-            },
-            {
-                path: "users",
-                element: <UsersPage />,
-            },
-            {
-                path: "orders",
-                element: <OrdersPage />,
-            },
+              {
+                index: true,
+                element: <ProductListPage />,
+              },
+              {
+                path: "add",
+                element: <AddProduct />,
+              },
+              {
+                path: ":id/edit",
+                element: <EditProduct />,
+              },
             ],
-        },
+          },
+          {
+            path: "users",
+            element: <UserListPage />,
+          },
+          {
+            path: "orders",
+            element: <OrderListPage />,
+          },
+          {
+            path: "orders/:id/edit",
+            element: <OrderEditPage />,
+          },
         ],
-    },
+      },
+    ],
+  },
 ]);

@@ -10,7 +10,10 @@ import {
   setPage,
 } from "../../features/products/productSlice";
 
-import { getProducts } from "../../features/products/productThunks";
+import {
+  getProducts,
+  getProductCategories,
+} from "../../features/products/productThunks";
 
 import ProductGrid from "../../components/product/ProductGrid";
 
@@ -22,13 +25,16 @@ import ErrorMessage from "../../components/common/ErrorMessage";
 const Products = () => {
   const dispatch = useDispatch();
 
-  const { products, filters, loading, error, total, page, pages } = useSelector(
-    (state) => state.products,
-  );
+  const { products, categories, filters, loading, error, total, page, pages } =
+    useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(getProducts(filters));
   }, [dispatch, filters]);
+
+    useEffect(() => {
+      dispatch(getProductCategories());
+    }, [dispatch]);
 
   return (
     <div className="container mx-auto py-8">
@@ -36,7 +42,7 @@ const Products = () => {
         search={filters.search}
         category={filters.category}
         sort={filters.sort}
-        categories={["Electronics", "Books", "Fashion"]}
+        categories={categories}
         onSearch={(value) => dispatch(setSearch(value))}
         onCategory={(value) => dispatch(setCategory(value))}
         onSort={(value) => dispatch(setSort(value))}

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
     getProducts,
+    getProductCategories,
     getProduct,
     createProduct,
     updateProduct,
@@ -10,6 +11,7 @@ import {
 const initialState = {
     products: [],
     product: null,
+    categories: [],
 
     total: 0,
     page: 1,
@@ -19,7 +21,7 @@ const initialState = {
     filters: {
         search: "",
         category: "",
-        sort: "latest",
+        sort: "newest",
         page: 1,
         limit: 12,
     },
@@ -55,8 +57,9 @@ const productSlice = createSlice({
             state.filters = {
                 search: "",
                 category: "",
-                sort: "latest",
+                sort: "newest",
                 page: 1,
+                limit: 12,
             };
         },
 
@@ -80,11 +83,28 @@ const productSlice = createSlice({
             .addCase(getProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload.products;
-                state.page = action.payload.page;
-                state.pages = action.payload.pages;
-                state.limit = action.payload.limit;
+                // state.page = action.payload.page;
+                // state.pages = action.payload.pages;
+                // state.limit = action.payload.limit;
+                state.page = action.payload.currentPage;
+                state.pages = action.payload.totalPages;
+                state.total = action.payload.totalProducts;
             })
             .addCase(getProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            // Get Product Categories
+            .addCase(getProductCategories.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getProductCategories.fulfilled, (state, action) => {
+                state.loading = false;
+                state.categories = action.payload.categories;
+            })
+            .addCase(getProductCategories.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

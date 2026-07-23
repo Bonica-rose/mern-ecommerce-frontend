@@ -3,6 +3,7 @@ import {
     placeOrderAPI,
     myOrdersAPI,
     getOrderAPI,
+    getOrderByIdAPI,
     allOrdersAPI,
     updateOrderStatusAPI,
 } from "./orderAPI";
@@ -46,6 +47,19 @@ export const getOrder = createAsyncThunk(
     }
 );
 
+export const getOrderById = createAsyncThunk(
+    "orders/getOrderById",
+    async (id, thunkAPI) => {
+        try {
+            return await getOrderByIdAPI(id);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Failed to fetch order"
+            );
+        }
+    }
+);
+
 export const allOrders = createAsyncThunk(
     "orders/allOrders",
     async (_, thunkAPI) => {
@@ -61,9 +75,9 @@ export const allOrders = createAsyncThunk(
 
 export const updateOrderStatus = createAsyncThunk(
     "orders/updateOrderStatus",
-    async ({ id, orderStatus }, thunkAPI) => {
+    async ({ id, data }, thunkAPI) => {
         try {
-            return await updateOrderStatusAPI({ id, orderStatus });
+            return await updateOrderStatusAPI({ id, data });
         } catch (error) {
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message || "Failed to update order status"

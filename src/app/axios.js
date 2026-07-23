@@ -24,37 +24,36 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
 
-    async (error) => {
+    (error) => {
 
         if (!error.response) {
             toast.error("Network error. Please check your connection.");
             return Promise.reject(error);
         }
 
-        switch (error.response.status) {
+        const { status, data } = error.response;
+        const url = error.config?.url;
 
+        // Don't show a toast for the initial auth check
+        if (status === 401 && url === "/auth/me") {
+            return Promise.reject(error);
+        }
+
+        switch (status) {
             case 400:
-                toast.error(error.response.data.message);
+                toast.error(data.message);
                 break;
 
-            case 401: 
-                toast.error(error.response.data?.message || "Invalid credentials");
+            case 401:
+                toast.error(data?.message || "Unauthorized");
                 break;
 
             case 403:
                 toast.error("You don't have permission.");
                 break;
 
-            case 404:
-                toast.error("Resource not found.");
-                break;
-
             case 409:
-                toast.error(error.response.data.message);
-                break;
-
-            case 422:
-                // Handle validation errors in the form instead of a toast
+                toast.error(data.message);
                 break;
 
             case 429:
@@ -66,7 +65,7 @@ api.interceptors.response.use(
                 break;
 
             default:
-                toast.error(error.response.data?.message || "Unexpected error.");
+                toast.error(data?.message || "Unexpected error.");
         }
 
         return Promise.reject(error);

@@ -2,16 +2,18 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function AdminRoute() {
-    const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+    const { user, isAuthenticated, authChecked } = useSelector(
+        (state) => state.auth,
+    );
 
     const location = useLocation();
 
     // Wait until auth check completes
-    if (loading) {
+    if (!authChecked) {
         return (
-        <div className="flex min-h-screen items-center justify-center">
-            Loading...
-        </div>
+            <div className="flex min-h-screen items-center justify-center">
+                Loading...
+            </div>
         );
     }
 
