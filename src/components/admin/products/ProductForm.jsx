@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { productSchema } from "../../../schemas/productSchema";
 
+import { generateDescription } from "../../../features/dashboard/dashboardAPI"
+
 const ProductForm = ({
   initialValues = null,
   onSubmit,
@@ -11,11 +13,14 @@ const ProductForm = ({
   buttonText,
 }) => {
   const [preview, setPreview] = useState("");
+  const [generating, setGenerating] = useState(false);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(productSchema),
@@ -54,6 +59,32 @@ const ProductForm = ({
     setPreview(URL.createObjectURL(file));
   };
 
+  const handleGenerateDescription = async () => {
+    try {
+      setGenerating(true);
+
+      const name = watch("name");
+      const category = watch("category");
+
+      if (!name || !category) {
+        toast.error("Please enter Product Name and Category first.");
+        return;
+      }
+
+      const response = await generateDescription({
+        name: watch("name"),
+        category: watch("category"),
+        price: watch("price"),
+      });
+
+      setValue("description", response.description);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   // Submit Form
   const submitHandler = (data) => {
     const formData = new FormData();
@@ -69,7 +100,7 @@ const ProductForm = ({
       formData.append("image", data.image[0]);
     }
 
-    console.log(formData);
+    // console.log(formData);
 
     onSubmit(formData);
   };
@@ -97,23 +128,6 @@ const ProductForm = ({
           )}
         </div>
 
-        {/* Description */}
-        <div>
-          <label className="mb-2 block text-sm font-medium">Description</label>
-
-          <textarea
-            rows={5}
-            {...register("description")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-          />
-
-          {errors.description && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.description.message}
-            </p>
-          )}
-        </div>
-
         {/* Category */}
         <div>
           <label className="mb-2 block text-sm font-medium">Category</label>
@@ -138,6 +152,34 @@ const ProductForm = ({
           {errors.category && (
             <p className="mt-1 text-sm text-red-500">
               {errors.category.message}
+            </p>
+          )}
+        </div>
+
+        {/* Description */}
+        <div>
+          <div className="mb-2 flex items-center justify-between">
+            <label className="text-sm font-medium">Description</label>
+
+            <button
+              type="button"
+              onClick={handleGenerateDescription}
+              disabled={generating}
+              className="rounded bg-violet-600 px-3 py-1 text-sm text-white hover:bg-violet-700 disabled:opacity-50"
+            >
+              {generating ? "Generating..." : "✨ Generate"}
+            </button>
+          </div>
+
+          <textarea
+            rows={5}
+            {...register("description")}
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          />
+
+          {errors.description && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.description.message}
             </p>
           )}
         </div>

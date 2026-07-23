@@ -9,7 +9,7 @@ const Contact = () => {
             </p>
 
             <p>
-            <strong>Phone:</strong> +91 98765 43210
+            <strong>Phone:</strong> +91 987 654 3210
             </p>
 
             <p>
